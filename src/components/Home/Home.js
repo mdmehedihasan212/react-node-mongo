@@ -14,6 +14,18 @@ const Home = () => {
         const process = window.confirm('Are you sure delete');
         if (process) {
             console.log('this is delete user', id);
+            const url = `http://localhost:5000/user/${id}`;
+            fetch(url, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.deletedCount > 0) {
+                        const reaming = users.filter(user => user._id !== id)
+                        setUsers(reaming);
+                    }
+                })
         }
     }
 
